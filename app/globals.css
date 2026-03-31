@@ -1,0 +1,251 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── FOUNDATIONS (exact spec) ── */
+  --color-background: #141210;
+  --color-alt-bg: #1E1A16;
+  --color-card: #272219;
+  --color-elevated: #312920;
+  --color-sunken: #1B1611;
+
+  /* ── STRUCTURE ── */
+  --color-border-default: #3A3028;
+  --color-border-strong: #4C3D31;
+
+  /* ── TYPOGRAPHY ── */
+  --color-text-headline: #FFF8F0;
+  --color-text-body: #F5EFE7;
+  --color-text-secondary: #C8B9AA;
+  --color-text-lifted: #D0C0B2;
+  --color-text-muted: #9F8E80;
+  --color-text-placeholder: #8D7B6E;
+
+  /* ── COPPER — PRIMARY ACCENT ── */
+  --color-copper-default: #C4622D;
+  --color-copper-hover: #D97840;
+  --color-copper-pressed: #9F4D24;
+
+  /* ── TURQUOISE — SECONDARY ACCENT ── */
+  --color-turquoise-default: #2BBFB3;
+  --color-turquoise-hover: #46D4C7;
+  --color-turquoise-deep: #1D8F87;
+
+  /* ── STATUS ── */
+  --color-status-success: #78C27D;
+  --color-status-warning: #D9A441;
+  --color-status-error: #D46A5E;
+
+  /* ── DESERT TONES ── */
+  --color-desert-sand: #BFA58A;
+  --color-sunset-amber: #D9A441;
+  --color-red-rock: #A14E3B;
+
+  /* ── FONTS ── */
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-xl: 16px;
+}
+
+@layer base {
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  ::selection {
+    background-color: rgba(43, 191, 179, 0.3);
+    color: #FFF8F0;
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text-body);
+    font-family: var(--font-sans);
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--color-text-headline);
+    font-family: var(--font-display);
+    letter-spacing: -0.035em;
+    line-height: 1.08;
+  }
+}
+
+@layer utilities {
+  /* ── GLOW EFFECTS ── */
+  .glow-copper {
+    box-shadow:
+      0 0 0 1px rgba(196, 98, 45, 0.15),
+      0 4px 24px rgba(196, 98, 45, 0.20),
+      0 8px 48px rgba(196, 98, 45, 0.10);
+  }
+  .glow-copper-intense {
+    box-shadow:
+      0 0 0 1px rgba(196, 98, 45, 0.2),
+      0 4px 30px rgba(196, 98, 45, 0.30),
+      0 14px 64px rgba(196, 98, 45, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  .glow-turquoise {
+    box-shadow:
+      0 0 0 1px rgba(43, 191, 179, 0.12),
+      0 4px 20px rgba(43, 191, 179, 0.18);
+  }
+
+  /* ── GLASS PANELS ── */
+  .glass-panel {
+    background: linear-gradient(145deg, rgba(39, 34, 25, 0.65), rgba(30, 26, 22, 0.45));
+    backdrop-filter: blur(20px) saturate(1.5);
+    -webkit-backdrop-filter: blur(20px) saturate(1.5);
+    border: 1px solid rgba(255, 248, 240, 0.06);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 248, 240, 0.04),
+      0 8px 32px rgba(0, 0, 0, 0.35);
+  }
+
+  /* ── TEXT GRADIENTS ── */
+  .text-gradient-copper {
+    background: linear-gradient(135deg, #FFF8F0 20%, #C4622D 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .text-gradient-copper-turquoise {
+    background: linear-gradient(135deg, #C4622D 0%, #2BBFB3 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ── HERO BACKGROUND (exact spec) ── */
+  .bg-hero-gradient {
+    background:
+      radial-gradient(ellipse 80% 50% at 15% 35%, rgba(196, 98, 45, 0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 55% 45% at 85% 65%, rgba(43, 191, 179, 0.05) 0%, transparent 70%),
+      linear-gradient(135deg, #141210 0%, #1B1714 45%, #211913 100%);
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  .noise-overlay {
+    position: relative;
+  }
+  .noise-overlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 200px;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.5;
+  }
+
+  /* ── DOT GRID ── */
+  .dot-grid::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255, 248, 240, 0.025) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── SECTION DIVIDER ── */
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(196, 98, 45, 0.2), rgba(43, 191, 179, 0.15), transparent);
+  }
+
+  /* ── AMBIENT PREMIUM EFFECT (exact spec) ── */
+  .ambient-glow {
+    background-color: rgba(255, 248, 240, 0.04);
+  }
+
+  /* ── PRIMARY BUTTON ── */
+  .btn-primary {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.1rem 2.5rem;
+    font-weight: 700;
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+    font-size: 1.05rem;
+    border-radius: 14px;
+    background: linear-gradient(145deg, #D97840 0%, #C4622D 100%);
+    color: #141210;
+    cursor: pointer;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(196, 98, 45, 0.2),
+      0 4px 24px rgba(196, 98, 45, 0.20),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    transition: all 0.15s ease-out;
+  }
+  .btn-primary::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, transparent 50%);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+  .btn-primary:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow:
+      0 0 0 1px rgba(196, 98, 45, 0.3),
+      0 8px 44px rgba(196, 98, 45, 0.30),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+  .btn-primary:active {
+    transform: translateY(-1px) scale(0.98);
+    transition: all 0.08s ease-out;
+  }
+
+  /* ── SECONDARY BUTTON (outline → fill sweep) ── */
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.1rem 2.5rem;
+    font-weight: 700;
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+    font-size: 1.05rem;
+    border-radius: 14px;
+    border: 1.5px solid rgba(43, 191, 179, 0.4);
+    color: #2BBFB3;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+    transition: all 0.15s ease-out;
+  }
+  .btn-secondary::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #2BBFB3;
+    transform: translateX(-101%);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: -1;
+    border-radius: inherit;
+  }
+  .btn-secondary:hover {
+    color: #141210;
+    border-color: #2BBFB3;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 24px rgba(43, 191, 179, 0.15);
+  }
+  .btn-secondary:hover::before {
+    transform: translateX(0);
+  }
+  .btn-secondary:active {
+    transform: translateY(-1px) scale(0.98);
+    transition: all 0.08s ease-out;
+  }
+}
