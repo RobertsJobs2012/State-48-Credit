@@ -1,8 +1,0 @@
-{
-  "name": "state-48-credit",
-  "compatibility_date": "2026-03-30",
-  "compatibility_flags": [
-    "nodejs_compat"
-  ],
-  "pages_build_output_dir": ".open-next"
-}
