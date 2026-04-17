@@ -1,0 +1,745 @@
+@import "tailwindcss";
+
+/* ================================================================
+   STATE 48 CREDIT — ARIZONA DARK THEME
+   Copper = money / action / conversion
+   Turquoise = trust / interaction / navigation
+   NEVER mix color roles.
+   ================================================================ */
+
+@theme {
+  /* ---- Surfaces ---- */
+  --color-bg: #141210;
+  --color-bg-alt: #1E1A16;
+  --color-surface: #272219;
+  --color-surface-elevated: #312920;
+  --color-surface-sunken: #1B1611;
+
+  /* ---- Borders ---- */
+  --color-border: #3A3028;
+  --color-border-strong: #4C3D31;
+
+  /* ---- Typography ---- */
+  --color-text-headline: #FFF8F0;
+  --color-text-body: #F5EFE7;
+  --color-text-secondary: #C8B9AA;
+  --color-text-lifted: #D0C0B2;
+  --color-text-muted: #9F8E80;
+  --color-text-placeholder: #8D7B6E;
+
+  /* ---- Copper: primary / conversion ---- */
+  --color-copper: #C4622D;
+  --color-copper-hover: #D97840;
+  --color-copper-pressed: #9F4D24;
+  --color-copper-glow: rgba(196, 98, 45, 0.20);
+
+  /* ---- Turquoise: trust / interaction ---- */
+  --color-turquoise: #2BBFB3;
+  --color-turquoise-hover: #46D4C7;
+  --color-turquoise-deep: #1D8F87;
+  --color-turquoise-glow: rgba(43, 191, 179, 0.18);
+
+  /* ---- Status ---- */
+  --color-success: #78C27D;
+  --color-warning: #D9A441;
+  --color-error: #D46A5E;
+
+  /* ---- Desert accents (sparingly) ---- */
+  --color-sand: #BFA58A;
+  --color-amber: #D9A441;
+  --color-clay: #A14E3B;
+
+  /* ---- Fonts ---- */
+  --font-display: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* ---- Radii ---- */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-pill: 999px;
+
+  /* ---- Shadows ---- */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.30);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.45);
+  --shadow-copper: 0 8px 28px rgba(196, 98, 45, 0.25);
+  --shadow-turquoise: 0 8px 28px rgba(43, 191, 179, 0.20);
+
+  /* ---- Breakpoints (Tailwind default w/ additions) ---- */
+  --breakpoint-xs: 360px;
+  --breakpoint-3xl: 1920px;
+}
+
+/* ================================================================
+   BASE
+   ================================================================ */
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color-scheme: dark;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-text-body);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--color-text-headline);
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  h1 { font-size: clamp(2.5rem, 5vw + 1rem, 4.5rem); letter-spacing: -0.03em; }
+  h2 { font-size: clamp(2rem, 3vw + 1rem, 3.25rem); letter-spacing: -0.025em; }
+  h3 { font-size: clamp(1.5rem, 1.5vw + 1rem, 2.25rem); }
+  h4 { font-size: clamp(1.25rem, 0.75vw + 1rem, 1.625rem); }
+
+  p {
+    color: var(--color-text-body);
+    max-width: 65ch;
+  }
+
+  a {
+    color: var(--color-turquoise);
+    text-decoration: none;
+    transition: color 180ms ease;
+  }
+
+  a:hover { color: var(--color-turquoise-hover); }
+  a:focus-visible { outline: 2px solid var(--color-turquoise); outline-offset: 2px; border-radius: 2px; }
+
+  button { font-family: inherit; cursor: pointer; }
+  button:focus-visible { outline: 2px solid var(--color-turquoise); outline-offset: 2px; }
+
+  ::selection {
+    background: var(--color-copper);
+    color: var(--color-text-headline);
+  }
+
+  img, picture, video, canvas, svg { display: block; max-width: 100%; }
+  input, button, textarea, select { font: inherit; }
+
+  :focus-visible { outline: 2px solid var(--color-turquoise); outline-offset: 2px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ================================================================
+   COMPONENT PRIMITIVES
+   ================================================================ */
+
+@layer components {
+  /* ---- Container ---- */
+  .container-page {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 4vw, 2rem);
+  }
+
+  .container-narrow {
+    width: 100%;
+    max-width: 960px;
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 4vw, 2rem);
+  }
+
+  /* ---- Buttons ---- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    border-radius: var(--radius-pill);
+    padding: 0.875rem 1.75rem;
+    min-height: 48px;
+    transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease, color 180ms ease;
+    will-change: transform;
+    white-space: nowrap;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+
+  .btn-copper {
+    background: var(--color-copper);
+    color: #FFFFFF;
+    box-shadow: var(--shadow-copper);
+  }
+  .btn-copper:hover { background: var(--color-copper-hover); box-shadow: 0 10px 32px rgba(196, 98, 45, 0.38); }
+  .btn-copper:active { background: var(--color-copper-pressed); }
+
+  .btn-turquoise {
+    background: var(--color-turquoise);
+    color: #062E2A;
+    box-shadow: var(--shadow-turquoise);
+  }
+  .btn-turquoise:hover { background: var(--color-turquoise-hover); }
+  .btn-turquoise:active { background: var(--color-turquoise-deep); color: #FFFFFF; }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-text-headline);
+    border: 1px solid var(--color-border-strong);
+  }
+  .btn-ghost:hover {
+    background: var(--color-surface);
+    border-color: var(--color-turquoise);
+    color: var(--color-turquoise-hover);
+  }
+
+  .btn-link {
+    color: var(--color-turquoise);
+    background: transparent;
+    padding: 0;
+    min-height: auto;
+    font-weight: 600;
+  }
+  .btn-link:hover { color: var(--color-turquoise-hover); text-decoration: underline; text-underline-offset: 4px; }
+
+  /* ---- Cards (3D "bento" — raised, floating, tactile) ---- */
+  .card {
+    position: relative;
+    isolation: isolate;
+    background:
+      linear-gradient(180deg, rgba(58, 48, 38, 1) 0%, rgba(39, 34, 25, 1) 72%, rgba(34, 29, 22, 1) 100%);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.25rem, 2vw, 2rem);
+    box-shadow:
+      /* inset top highlight — specular edge */
+      inset 0 1px 0 rgba(255, 248, 240, 0.05),
+      /* inset bottom dark edge — carved depth */
+      inset 0 -1px 0 rgba(0, 0, 0, 0.40),
+      /* close contact shadow */
+      0 1px 2px rgba(0, 0, 0, 0.30),
+      /* short ambient */
+      0 4px 10px rgba(0, 0, 0, 0.22),
+      /* long cast — the "float" */
+      0 14px 30px rgba(0, 0, 0, 0.38),
+      /* atmospheric bloom */
+      0 28px 64px rgba(0, 0, 0, 0.26);
+    transition:
+      transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 320ms ease,
+      box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+
+  /* Glossy top sheen — the thing that sells the "lifted" feel */
+  .card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(255, 248, 240, 0.055) 0%, rgba(255, 248, 240, 0) 28%);
+    z-index: -1;
+  }
+
+  /* Subtle gradient border — richer edge than a flat 1px */
+  .card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background:
+      linear-gradient(180deg, rgba(255, 248, 240, 0.10) 0%, rgba(255, 248, 240, 0.00) 22%, rgba(0, 0, 0, 0.35) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    border-color: var(--color-border-strong);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 248, 240, 0.07),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.50),
+      0 1px 2px rgba(0, 0, 0, 0.35),
+      0 8px 18px rgba(0, 0, 0, 0.28),
+      0 26px 50px rgba(0, 0, 0, 0.48),
+      0 48px 90px rgba(0, 0, 0, 0.32),
+      /* subtle turquoise atmospheric lift on hover */
+      0 0 48px rgba(43, 191, 179, 0.06);
+  }
+
+  .card-elevated {
+    background:
+      linear-gradient(180deg, rgba(66, 54, 42, 1) 0%, rgba(49, 41, 32, 1) 72%, rgba(39, 34, 26, 1) 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 248, 240, 0.07),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.45),
+      0 2px 4px rgba(0, 0, 0, 0.32),
+      0 6px 14px rgba(0, 0, 0, 0.26),
+      0 18px 38px rgba(0, 0, 0, 0.42),
+      0 36px 80px rgba(0, 0, 0, 0.30);
+  }
+
+  .card-elevated:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 248, 240, 0.09),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.55),
+      0 2px 4px rgba(0, 0, 0, 0.38),
+      0 10px 22px rgba(0, 0, 0, 0.30),
+      0 32px 60px rgba(0, 0, 0, 0.52),
+      0 56px 110px rgba(0, 0, 0, 0.36),
+      0 0 56px rgba(43, 191, 179, 0.08);
+  }
+
+  /* Registered custom properties — enable smooth interpolation
+     (fallback: stepped transitions in unsupported browsers, still works). */
+  @property --grad-angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+  }
+  @property --featured-glow {
+    syntax: "<color>";
+    initial-value: #C4622D;
+    inherits: false;
+  }
+
+  .card-featured {
+    /* Border color lives in ::after (rotating conic). Keep edge transparent. */
+    border: 1.5px solid transparent;
+    /* Double-layer bloom: inner tight ring + outer atmospheric glow.
+       Both use --featured-glow so they pulse through the palette together. */
+    box-shadow:
+      inset 0 1px 0 rgba(255, 248, 240, 0.08),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.45),
+      0 0 0 2px color-mix(in oklab, var(--featured-glow) 35%, transparent),
+      0 0 0 6px color-mix(in oklab, var(--featured-glow) 14%, transparent),
+      0 2px 4px rgba(0, 0, 0, 0.32),
+      0 10px 24px rgba(0, 0, 0, 0.32),
+      0 18px 48px color-mix(in oklab, var(--featured-glow) 40%, transparent),
+      0 36px 96px color-mix(in oklab, var(--featured-glow) 22%, transparent),
+      0 56px 110px rgba(0, 0, 0, 0.36);
+    animation: featuredGlowCycle 6s linear infinite;
+  }
+
+  /* Rotating gradient border — thicker, full palette sweep */
+  .card-featured::after {
+    padding: 3px;
+    background:
+      conic-gradient(
+        from var(--grad-angle),
+        #C4622D  0deg,    /* copper          */
+        #D9A441 60deg,    /* warning / gold  */
+        #78C27D 120deg,   /* success / green */
+        #46D4C7 180deg,   /* turquoise-hover */
+        #2BBFB3 240deg,   /* turquoise       */
+        #D46A5E 300deg,   /* error / salmon  */
+        #C4622D 360deg    /* copper (close)  */
+      );
+    /* Drop a soft halo behind the border itself for extra "glow" energy */
+    filter: drop-shadow(0 0 6px color-mix(in oklab, var(--featured-glow) 60%, transparent));
+    animation: rotateBorder 6s linear infinite;
+  }
+
+  @keyframes rotateBorder {
+    to { --grad-angle: 360deg; }
+  }
+
+  /* Glow color cycles through the same palette on the same cadence as the
+     border's conic — so the halo reads as "the same color that's currently
+     dominant on the front-facing slice of the border." */
+  @keyframes featuredGlowCycle {
+    0%    { --featured-glow: #C4622D; }
+    17%   { --featured-glow: #D9A441; }
+    34%   { --featured-glow: #78C27D; }
+    50%   { --featured-glow: #46D4C7; }
+    67%   { --featured-glow: #2BBFB3; }
+    83%   { --featured-glow: #D46A5E; }
+    100%  { --featured-glow: #C4622D; }
+  }
+
+  .card-featured:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 248, 240, 0.10),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.55),
+      0 0 0 3px color-mix(in oklab, var(--featured-glow) 50%, transparent),
+      0 0 0 8px color-mix(in oklab, var(--featured-glow) 18%, transparent),
+      0 2px 4px rgba(0, 0, 0, 0.38),
+      0 14px 30px rgba(0, 0, 0, 0.38),
+      0 26px 60px color-mix(in oklab, var(--featured-glow) 55%, transparent),
+      0 48px 120px color-mix(in oklab, var(--featured-glow) 30%, transparent),
+      0 68px 130px rgba(0, 0, 0, 0.40);
+  }
+
+  .card-featured:hover,
+  .card-featured:hover::after {
+    /* Speed up the whole show on hover — sweep + pulse both double-time */
+    animation-duration: 3s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card-featured,
+    .card-featured::after {
+      animation: none;
+    }
+    .card-featured::after {
+      background:
+        linear-gradient(135deg,
+          var(--color-copper) 0%,
+          var(--color-warning) 50%,
+          var(--color-turquoise) 100%);
+      filter: none;
+    }
+  }
+
+  /* ---- Rotating-color pill (e.g. "MOST CHOSEN" tag) ---- */
+  .pill-rotating {
+    --pill-c: var(--color-copper);
+    background-color: var(--pill-c);
+    color: #fff;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.25),
+      0 6px 14px color-mix(in oklab, var(--pill-c) 50%, transparent),
+      0 0 0 1px color-mix(in oklab, var(--pill-c) 60%, transparent);
+    animation: pillColorCycle 7s ease-in-out infinite;
+  }
+
+  @keyframes pillColorCycle {
+    0%   { --pill-c: var(--color-copper); }
+    25%  { --pill-c: var(--color-copper-hover); }
+    50%  { --pill-c: var(--color-warning); }
+    75%  { --pill-c: var(--color-turquoise); }
+    100% { --pill-c: var(--color-copper); }
+  }
+
+  /* Animate the custom property directly for smooth color interpolation */
+  @property --pill-c {
+    syntax: "<color>";
+    initial-value: #C4622D;
+    inherits: false;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pill-rotating {
+      animation: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card:hover,
+    .card-elevated:hover,
+    .card-featured:hover {
+      transform: none;
+    }
+  }
+
+  /* ---- Badges ---- */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    padding: 0.375rem 0.75rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-border-strong);
+    background: var(--color-surface);
+    color: var(--color-text-lifted);
+  }
+
+  .badge-copper {
+    background: var(--color-copper-glow);
+    color: var(--color-copper-hover);
+    border-color: rgba(196, 98, 45, 0.35);
+  }
+
+  .badge-turquoise {
+    background: var(--color-turquoise-glow);
+    color: var(--color-turquoise-hover);
+    border-color: rgba(43, 191, 179, 0.35);
+  }
+
+  .badge-success {
+    background: rgba(120, 194, 125, 0.15);
+    color: var(--color-success);
+    border-color: rgba(120, 194, 125, 0.35);
+  }
+
+  /* ---- Section rhythm ---- */
+  .section {
+    padding-block: clamp(4rem, 8vw, 7rem);
+  }
+
+  .section-alt {
+    background: var(--color-bg-alt);
+  }
+
+  /* ---- Eyebrow / kicker text ---- */
+  .eyebrow {
+    display: inline-block;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-turquoise);
+  }
+
+  /* ---- Gradients ---- */
+  .bg-hero-gradient {
+    background: linear-gradient(135deg, #141210 0%, #1B1714 45%, #211913 100%);
+  }
+
+  .bg-copper-sheen {
+    background: linear-gradient(135deg, rgba(196, 98, 45, 0.08) 0%, transparent 60%);
+  }
+
+  .bg-turquoise-sheen {
+    background: linear-gradient(135deg, rgba(43, 191, 179, 0.06) 0%, transparent 60%);
+  }
+
+  /* ---- Dividers ---- */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--color-border-strong) 50%, transparent 100%);
+    border: 0;
+  }
+
+  /* ---- Inputs ---- */
+  .input {
+    width: 100%;
+    background: var(--color-surface-sunken);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-body);
+    padding: 0.875rem 1rem;
+    border-radius: var(--radius-md);
+    min-height: 48px;
+    transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+  }
+  .input::placeholder { color: var(--color-text-placeholder); }
+  .input:hover { border-color: var(--color-border-strong); }
+  .input:focus {
+    outline: none;
+    border-color: var(--color-turquoise);
+    box-shadow: 0 0 0 3px var(--color-turquoise-glow);
+    background: var(--color-surface);
+  }
+  .input[aria-invalid="true"] {
+    border-color: var(--color-error);
+    box-shadow: 0 0 0 3px rgba(212, 106, 94, 0.20);
+  }
+
+  .label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-lifted);
+    margin-bottom: 0.5rem;
+  }
+
+  /* ---- Skip link (a11y) ---- */
+  .skip-link {
+    position: absolute;
+    top: -100px;
+    left: 1rem;
+    background: var(--color-copper);
+    color: #FFFFFF;
+    padding: 0.75rem 1.25rem;
+    border-radius: var(--radius-md);
+    z-index: 9999;
+    font-weight: 600;
+    transition: top 180ms ease;
+  }
+  .skip-link:focus { top: 1rem; }
+
+  /* ---- Stat block ---- */
+  .stat-value {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3vw + 1rem, 3.25rem);
+    font-weight: 800;
+    color: var(--color-text-headline);
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.02em;
+    margin-top: 0.5rem;
+  }
+
+  /* ---- Noise texture overlay (subtle) ---- */
+  .noise-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.03;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.8'/></svg>");
+  }
+
+  /* ---- Announcement bar: soft living gradient ---- */
+  /* A slow horizontal drift of faint copper + turquoise glows across the dark
+     base. Low-contrast on purpose — noticeable peripherally, never distracting. */
+  .announcement-bar-bg {
+    background:
+      linear-gradient(
+        90deg,
+        var(--color-surface-sunken) 0%,
+        rgba(196, 98, 45, 0.14) 22%,
+        var(--color-surface-sunken) 44%,
+        rgba(43, 191, 179, 0.12) 66%,
+        var(--color-surface-sunken) 88%,
+        rgba(196, 98, 45, 0.14) 110%
+      );
+    background-size: 220% 100%;
+    animation: announcementDrift 14s linear infinite;
+  }
+
+  @keyframes announcementDrift {
+    from { background-position: 0% 50%; }
+    to   { background-position: -220% 50%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .announcement-bar-bg {
+      animation: none;
+      background: var(--color-surface-sunken);
+    }
+  }
+}
+
+/* ================================================================
+   ANIMATIONS
+   ================================================================ */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInFast {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes pulseCopper {
+  0%, 100% { box-shadow: 0 0 0 0 var(--color-copper-glow); }
+  50%      { box-shadow: 0 0 0 12px transparent; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.anim-fade-in    { animation: fadeIn 520ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+.anim-fade-in-fast { animation: fadeInFast 320ms ease-out both; }
+.anim-marquee    { animation: marquee 40s linear infinite; }
+.anim-pulse-copper { animation: pulseCopper 2.4s ease-in-out infinite; }
+
+/* ---- Scroll-driven reveal (progressive) ---- */
+@supports (animation-timeline: view()) {
+  .reveal {
+    animation: fadeIn linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 40%;
+  }
+}
+
+/* ---- Page scroll progress bar (native CSS scroll-driven) ---- */
+@supports (animation-timeline: scroll()) {
+  @keyframes scrollFill {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+  .scroll-progress {
+    animation: scrollFill linear both;
+    animation-timeline: scroll(root block);
+  }
+}
+
+/* ---- Parallax orbs (scroll-linked drift, zero JS) ---- */
+@supports (animation-timeline: scroll()) {
+  @keyframes parallaxUp {
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(0, -120px, 0); }
+  }
+  @keyframes parallaxUpRight {
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(80px, -100px, 0); }
+  }
+  @keyframes parallaxDownLeft {
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(-60px, 80px, 0); }
+  }
+  .parallax-up        { animation: parallaxUp        linear both; animation-timeline: scroll(root block); }
+  .parallax-up-right  { animation: parallaxUpRight   linear both; animation-timeline: scroll(root block); }
+  .parallax-down-left { animation: parallaxDownLeft  linear both; animation-timeline: scroll(root block); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .parallax-up,
+  .parallax-up-right,
+  .parallax-down-left,
+  .scroll-progress {
+    animation: none !important;
+  }
+}
+
+/* Starting-style (Popover / modal graceful open) */
+@starting-style {
+  .pop-open {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+}
+.pop-open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition: opacity 220ms ease, transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---- View transitions ---- */
+@view-transition {
+  navigation: auto;
+}
